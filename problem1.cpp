@@ -126,7 +126,7 @@ int main(void)
     using namespace std;
     
     PresentChain chain;
-    thread servants[4];
+    thread servants[NUM_SERVANTS];
 
     for (int i = 0; i < 4; ++i)
         servants[i] = thread(task, i + 1, ref(chain));
