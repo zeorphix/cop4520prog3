@@ -17,6 +17,24 @@ struct Present {
     Present(int num) : tag(num), next (nullptr) {}
 };
 
+class PresentChain {
+    public:
+        void add(int tag) 
+        {
+
+        }
+
+        void remove(int tag) 
+        {
+
+        }
+
+        void search(int tag)
+        {
+            
+        }
+}
+
 int main(void)
 {
 
