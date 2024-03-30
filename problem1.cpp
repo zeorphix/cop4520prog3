@@ -54,16 +54,42 @@ class PresentChain {
 
         void remove(int tag) 
         {
+            using namespace std;
             mtx.lock();
 
             if (!head)
             {
-
+                cout << "Nothing to remove" << endl;
+                
+                mtx.unlock();
+                return;
             }
 
             if (!head->tag == tag)
             {
+                Present* temp = head;
+                head = head->next;
+                delete temp;
+                
+                mtx.unlock();
+                return;
+            }
 
+            Present* current = head;
+
+            while (current->next && curent->next->tag != tag)
+                current = current->next;
+
+            if (current->next)
+            {
+                Present* temp = current->next;
+                current->next = current->next->next;
+                delete temp;
+            }
+
+            else
+            {
+                cout << "Present with tag number " << tag << " not found" << endl;
             }
 
             mtx.unlock();
