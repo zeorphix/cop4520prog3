@@ -54,5 +54,8 @@ int main(void)
     for (int i = 0; i < 4; ++i)
         servants[i] = thread(task, i + 1, ref(chain));
     
+    for (auto& servant : servants)
+        servant.join();
+
     return 0;
 }
