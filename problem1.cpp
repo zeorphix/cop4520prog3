@@ -7,7 +7,15 @@
 #include <thread>
 #include <mutex>
 
+struct Present {
+    int tag;
+    
+    Present* next;
+    Present(int num) : tag(num), next (nullptr) {}
+};
+
 int main(void)
 {
+
     return 0;
 }
