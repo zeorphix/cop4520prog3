@@ -4,8 +4,8 @@
 // COP 4520, Spring 2024
 
 #include <iostream>
-#include <thread>
 #include <mutex>
+#include <thread>
 
 const int NUM_PRESENTS = 500000;
 const int NUM_SERVANTS = 4;
@@ -18,6 +18,9 @@ struct Present {
 };
 
 class PresentChain {
+    private:
+        Present* head;
+    
     public:
         void add(int tag) 
         {
@@ -31,12 +34,24 @@ class PresentChain {
 
         void search(int tag)
         {
-            
+
         }
-}
+
+        void task(int tag)
+        {
+
+        }
+};
 
 int main(void)
 {
+    using namespace std;
+    
+    PresentChain chain;
+    thread servants[4];
 
+    for (int i = 0; i < 4; ++i)
+
+    
     return 0;
 }
