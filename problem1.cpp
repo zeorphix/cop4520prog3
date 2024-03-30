@@ -3,7 +3,6 @@
 // Problem 1: The Birthday Presents Party
 // COP 4520, Spring 2024
 
-#include <array>
 #include <iostream>
 #include <mutex>
 #include <thread>
@@ -55,7 +54,19 @@ class PresentChain {
 
         void remove(int tag) 
         {
+            mtx.lock();
 
+            if (!head)
+            {
+
+            }
+
+            if (!head->tag == tag)
+            {
+
+            }
+
+            mtx.unlock();
         }
 
         bool search(int tag)
