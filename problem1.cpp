@@ -7,6 +7,9 @@
 #include <thread>
 #include <mutex>
 
+const int NUM_PRESENTS = 500000;
+const int NUM_SERVANTS = 4;
+
 struct Present {
     int tag;
     
