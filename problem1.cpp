@@ -11,6 +11,8 @@
 const int NUM_PRESENTS = 500000;
 const int NUM_SERVANTS = 4;
 
+std::mutex mtx;
+
 struct Present {
     int tag;
     
@@ -23,9 +25,20 @@ class PresentChain {
         Present* head;
     
     public:
+        PresentChain() : head(nullptr) {}
+
         void add(int tag) 
         {
+            Present* newPresent = new Present(tag);
 
+            mtx.lock()
+
+            if 
+            {
+
+            }
+
+            mtx.unlock();
         }
 
         void remove(int tag) 
