@@ -3,6 +3,7 @@
 // Problem 1: The Birthday Presents Party
 // COP 4520, Spring 2024
 
+#include <array>
 #include <iostream>
 #include <mutex>
 #include <thread>
@@ -36,12 +37,12 @@ class PresentChain {
         {
 
         }
-
-        void task(int tag)
-        {
-
-        }
 };
+
+void task(int num, PresentChain& chain)
+{
+
+}
 
 int main(void)
 {
@@ -51,7 +52,7 @@ int main(void)
     thread servants[4];
 
     for (int i = 0; i < 4; ++i)
-
+        servants[i] = thread(task, i + 1, ref(chain));
     
     return 0;
 }
