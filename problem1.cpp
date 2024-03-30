@@ -33,9 +33,21 @@ class PresentChain {
 
             mtx.lock()
 
-            if 
+            if (!head || head->tag > tag)
             {
+                newPresent->next = head;
+                head = newPresent;
+            }
 
+            else
+            {
+                Present* current = head;
+                
+                while (current->next && current->next->tag < tag)
+                    current = current->next;
+
+                newPresent->next = current->next;
+                current->next = newPresent;   
             }
 
             mtx.unlock();
