@@ -46,9 +46,24 @@ class PresentChain {
 
         }
 
-        void search(int tag)
+        bool search(int tag)
         {
+            mtx.lock();
+            Present* current = head;
 
+            while (current)
+            {
+                if (current->tag == tag)
+                {
+                    mtx.unlock();
+                    return true;
+                }
+
+                current = current->next;
+            }
+
+            mtx.unlock();
+            return false;
         }
 };
 
