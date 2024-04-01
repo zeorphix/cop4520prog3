@@ -15,6 +15,11 @@ const int MIN_TEMPERATURE = -100;
 
 std::mutex mtx;
 
+struct TemperatureData {
+    double temperature;
+    time_t timestamp;
+};
+
 void operation(int sensor_num)
 {
 
