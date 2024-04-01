@@ -3,9 +3,11 @@
 // Problem 2: Atmospheric Temperature Reading Module
 // COP 4520, Spring 2024
 
+#include <chrono>
+#include <cstdlib>
 #include <iostream>
-#include <thread>
 #include <mutex>
+#include <thread>
 
 const int NUM_SENSORS = 8;
 const int READINGS_PER_HOUR = 60;
@@ -20,7 +22,12 @@ struct TemperatureData {
     time_t timestamp;
 };
 
-void operation(int sensor_num)
+void readModule(int sensorNum)
+{
+
+}
+
+void compileReport(int sensorNum)
 {
 
 }
@@ -32,7 +39,7 @@ int main(void)
     vector<thread> sensorThreads;
 
     for (int i = 0; i < NUM_SENSORS; ++i)
-        sensorThreads.push_back(thread(operation), i + 1));
+        sensorThreads.push_back(thread(readModule), i + 1));
 
     for (auto& sensor : sensors)
         sensor.join();
