@@ -8,10 +8,17 @@
 #include <mutex>
 
 const int NUM_SENSORS = 8;
-const int NUM_READINGS_PER_HOUR = 60;
-const int NUM_MINUTES_PER_HOUR = 60;
+const int READINGS_PER_HOUR = 60;
+const int MINUTES_PER_HOUR = 60;
+const int MAX_TEMPERATURE = 70;
+const int MIN_TEMPERATURE = -100;
 
 std::mutex mtx;
+
+void operation(int sensor_num)
+{
+
+}
 
 int main(void)
 {
@@ -20,7 +27,7 @@ int main(void)
     vector<thread> sensorThreads;
 
     for (int i = 0; i < NUM_SENSORS; ++i)
-        sensorThreads.push_back(thread(generateTemp), i + 1));
+        sensorThreads.push_back(thread(operation), i + 1));
 
     for (auto& sensor : sensors)
         sensor.join();
