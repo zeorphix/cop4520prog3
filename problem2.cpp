@@ -8,6 +8,7 @@
 #include <iostream>
 #include <mutex>
 #include <thread>
+#include <vector>
 
 const int NUM_SENSORS = 8;
 const int READINGS_PER_HOUR = 60;
@@ -36,7 +37,7 @@ int main(void)
 {
     using namespace std;
 
-    vector<thread> sensorThreads;
+    vector<thread> sensors;
 
     for (int i = 0; i < NUM_SENSORS; ++i)
         sensorThreads.push_back(thread(readModule), i + 1));
