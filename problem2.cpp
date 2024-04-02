@@ -23,9 +23,24 @@ struct TemperatureData {
     time_t timestamp;
 };
 
+std::vector<TemperatureData> readings;
+
 void readModule(int sensorNum)
 {
+    using namespace std;
 
+    while (true)
+    {
+        double temperature = -100 + static_cast<double>(rand()) / RAND_MAX * (70 + 100);
+
+        cout << "temperature reading is " << temperature << endl;
+
+        mtx.lock();
+        readings.push_back({temperature, std::time(nullptr)});
+        mtx.unlock();
+
+        this_thread::sleep_for(chrono::seconds(3));
+    }
 }
 
 void compileReport(int sensorNum)
@@ -40,7 +55,7 @@ int main(void)
     vector<thread> sensors;
 
     for (int i = 0; i < NUM_SENSORS; ++i)
-        sensorThreads.push_back(thread(readModule), i + 1));
+        sensors.push_back(thread(readModule, i + 1));
 
     for (auto& sensor : sensors)
         sensor.join();
