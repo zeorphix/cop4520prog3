@@ -19,7 +19,7 @@ cop4520 programming assignment 3
 
 - Approach
 
-
+I used multithreading to simulate 8 sensors reading temperatures per minute at the top of the hour, so there are 60 total readings for each sensor for one hour. Then I added all the readings into an array and sorted them, listing out the highest 5 temperatures, lowest 5 temperatures, and the maximum temperature difference.
 
 - Experimental Evaluation
 
