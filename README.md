@@ -9,6 +9,7 @@ I used multithreading to simulate the scenario of the Minotaur assigning 1 of 3 
 
 - Experimental Evaluation
 
+In the initial stages of my program I attempted to create a single function to execute all the tasks. Then I separated the tasks into subfunctions under a class, and created a separate helper function to include random number generation. Then I tested the efficiency of my program by using different numbers for the variable of total presents received.
 
 - Instructions
 1. Download 'problem1.cpp'
