@@ -5,6 +5,7 @@ cop4520 programming assignment 3
 
 - Approach
 
+I used multithreading to simulate the scenario of the Minotaur assigning 1 of 3 random tasks to 4 servants concurrently, making functions representing each of the tasks. Then I created a concurrent linked list to represent the chain of presents, each with data that represents their unique tag number.
 
 - Experimental Evaluation
 
