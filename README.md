@@ -13,7 +13,7 @@ cop4520 programming assignment 3
 1. Download 'problem1.cpp'
 2. Move file to directory of your choice
 3. Compile by typing 'g++ problem1.cpp'
-4. Execute the file by typing './a.out'
+4. Execute the file by typing './a.exe'
 
 # Problem 2: Atmospheric Temperature Reading Module
 
@@ -28,4 +28,4 @@ cop4520 programming assignment 3
 1. Download 'problem2.cpp'
 2. Move file to directory of your choice
 3. Compile by typing 'g++ problem2.cpp'
-4. Execute the file by typing './a.out'
+4. Execute the file by typing './a.exe'
