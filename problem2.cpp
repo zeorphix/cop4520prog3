@@ -29,17 +29,16 @@ void readModule(int sensorNum)
 {
     using namespace std;
 
-    while (true)
+    for (int i = 0; i < READINGS_PER_HOUR; ++i)
     {
         double temperature = -100 + static_cast<double>(rand()) / RAND_MAX * (70 + 100);
 
+        mtx.lock();
         cout << "temperature reading is " << temperature << endl;
 
-        mtx.lock();
         readings.push_back({temperature, std::time(nullptr)});
         mtx.unlock();
 
-        this_thread::sleep_for(chrono::seconds(3));
     }
 }
 
@@ -51,6 +50,8 @@ void compileReport(int sensorNum)
 int main(void)
 {
     using namespace std;
+
+    srand(time(nullptr));
 
     vector<thread> sensors;
 
