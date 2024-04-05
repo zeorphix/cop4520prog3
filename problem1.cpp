@@ -30,7 +30,7 @@ class PresentChain {
         {
             Present* newPresent = new Present(tag);
 
-            mtx.lock()
+            mtx.lock();
 
             if (!head || head->tag > tag)
             {
@@ -65,7 +65,7 @@ class PresentChain {
                 return;
             }
 
-            if (!head->tag == tag)
+            if (head->tag == tag)
             {
                 Present* temp = head;
                 head = head->next;
@@ -77,7 +77,7 @@ class PresentChain {
 
             Present* current = head;
 
-            while (current->next && curent->next->tag != tag)
+            while (current->next && current->next->tag != tag)
                 current = current->next;
 
             if (current->next)
