@@ -42,9 +42,22 @@ void readModule(int sensorNum)
     }
 }
 
-void compileReport(int sensorNum)
+void compileReport(void)
 {
+    using namespace std;
 
+    mtx.lock();
+    vector<double> temperatures;
+
+    for (const auto& reading : readings)
+        temperatures.push_back(reading.temperature);
+    
+    mtx.unlock();
+    
+    cout << "hourly report" << endl;
+    cout << "top 5" << endl;
+
+    cout << "bottom 5" << endl;
 }
 
 int main(void)
@@ -61,5 +74,7 @@ int main(void)
     for (auto& sensor : sensors)
         sensor.join();
     
+    compileReport();
+
     return 0;
 }
