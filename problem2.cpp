@@ -11,6 +11,7 @@
 #include <thread>
 #include <vector>
 
+const int TEMPERATURE_LIST_LENGTH = 5;
 const int NUM_SENSORS = 8;
 const int READINGS_PER_HOUR = 60;
 const int MAX_TEMPERATURE = 70;
@@ -65,9 +66,22 @@ void compileReport(void)
     cout << endl;
     cout << "low 5" << endl;
     
-    for (int i = 0; i < 5; ++i)
+    for (int i = 0; i < TEMPERATURE_LIST_LENGTH; ++i)
         cout << temperatures[i] << " F ";
+    
+    double maxdifference = 0;
+    
+    for (int i = 1; i < temperatures.size(); ++i)
+    {
+        double difference = temperatures[i] - temperatures[i- 1];
 
+        if (difference > maxdifference)
+            maxdifference = difference;
+    }
+
+    cout << endl;
+    cout << "max temp diff" << endl;
+    cout << maxdifference << endl;
 }
 
 int main(void)
