@@ -34,7 +34,7 @@ void readModule(int sensorNum)
         double temperature = MIN_TEMPERATURE + static_cast<double>(rand()) / RAND_MAX * (MAX_TEMPERATURE + MIN_TEMPERATURE);
 
         mtx.lock();
-        cout << "temperature reading is " << temperature << endl;
+        // cout << "temperature reading is " << temperature << endl;
 
         readings.push_back({temperature, std::time(nullptr)});
         mtx.unlock();
@@ -57,14 +57,13 @@ void compileReport(void)
 
     sort(temperatures.begin(), temperatures.end());
 
-    cout << "hourly report" << endl;
-    cout << "top 5" << endl;
+    cout << "highest 5 temperatures" << endl;
     
     for (int i = temperatures.size() - 1; i >= temperatures.size() - 5; --i)
         cout << temperatures[i] << " F ";
     
     cout << endl;
-    cout << "low 5" << endl;
+    cout << "lowest 5 temperatures" << endl;
     
     for (int i = 0; i < TEMPERATURE_LIST_LENGTH; ++i)
         cout << temperatures[i] << " F ";
@@ -80,8 +79,8 @@ void compileReport(void)
     }
 
     cout << endl;
-    cout << "max temp diff" << endl;
-    cout << maxdifference << endl;
+    cout << "maximum temperature difference" << endl;
+    cout << maxdifference << " F" << endl;
 }
 
 int main(void)
