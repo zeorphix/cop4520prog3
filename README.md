@@ -22,7 +22,7 @@ cop4520 programming assignment 3
 
 
 - Experimental Evaluation
-
+I tested different temperature ranges and different seeds for the random number generator in my program. I used print statements to check the diversity and validity of the temperatures.
 
 - Instructions
 1. Download 'problem2.cpp'
