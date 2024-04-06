@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <mutex>
+#include <random>
 #include <thread>
 
 const int NUM_PRESENTS = 500000;
@@ -118,7 +119,12 @@ class PresentChain {
 
 void task(int num, PresentChain& chain)
 {
+    using namespace std;
 
+    random_device rd;
+
+    mt19937 gen(rd());
+    uniform_int_distribution<> dis(1, NUM_PRESENTS);
 }
 
 int main(void)
