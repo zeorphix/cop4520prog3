@@ -35,16 +35,23 @@ class PresentChain {
             mtx.lock();
 
             Present* prev = nullptr;
+            Present* current = head;
 
             cout << "add" << endl;
 
             for (int i = 0; i < batchSize; ++i)
             {
-                cout << i << endl;
+                // cout << i << endl;
                 
-                Present* newPresent = new Present(tag);
+                Present* newPresent = new Present(tag + i);
 
-                if (!head || head->tag > tag + i)
+                while (current && current->tag < tag + i)
+                {
+                    prev = current;
+                    current = current->next;
+                }
+
+                if (!prev)
                 {
                     newPresent->next = head;
                     head = newPresent;
@@ -52,17 +59,11 @@ class PresentChain {
 
                 else
                 {
-                    Present* current = head;
-                    
-                    while (current->next && current->next->tag < tag + i)
-                        current = current->next;
-
-                    newPresent->next = current->next;
-                    current->next = newPresent;   
+                    prev->next = newPresent;
+                    newPresent->next = current;
                 }
 
-                if (prev)
-                    prev->next = newPresent;
+                prev = newPresent;
             }
 
             mtx.unlock();
@@ -139,7 +140,7 @@ void task(int num, PresentChain& chain, std::unordered_set<int>& tags)
 
     for (int i = 0; i < NUM_PRESENTS; i += BATCH_SIZE)
     {
-        cout << i << endl;
+        // cout << i << endl;
 
         if (i % 3 == 0)
         {
@@ -165,6 +166,7 @@ void task(int num, PresentChain& chain, std::unordered_set<int>& tags)
             chain.search(tagToSearch);
         }
     }
+
 }
 
 int main(void)
@@ -177,11 +179,11 @@ int main(void)
 
     for (int i = 0; i < 4; ++i)
         servants[i] = thread(task, i + 1, ref(chain), ref(tags));
-    
+
     for (auto& servant : servants)
         servant.join();
     
     cout << "all presents have thank you notes written" << endl;
-    
+
     return 0;
 }
