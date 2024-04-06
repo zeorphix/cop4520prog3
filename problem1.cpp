@@ -31,28 +31,38 @@ class PresentChain {
         void add(int tag, int batchSize) 
         {
             using namespace std;
-
-            // cout << "add" << endl;
-
-            Present* newPresent = new Present(tag);
-
+            
             mtx.lock();
 
-            if (!head || head->tag > tag)
-            {
-                newPresent->next = head;
-                head = newPresent;
-            }
+            Present* prev = nullptr;
 
-            else
+            cout << "add" << endl;
+
+            for (int i = 0; i < batchSize; ++i)
             {
-                Present* current = head;
+                cout << i << endl;
                 
-                while (current->next && current->next->tag < tag)
-                    current = current->next;
+                Present* newPresent = new Present(tag);
 
-                newPresent->next = current->next;
-                current->next = newPresent;   
+                if (!head || head->tag > tag + i)
+                {
+                    newPresent->next = head;
+                    head = newPresent;
+                }
+
+                else
+                {
+                    Present* current = head;
+                    
+                    while (current->next && current->next->tag < tag + i)
+                        current = current->next;
+
+                    newPresent->next = current->next;
+                    current->next = newPresent;   
+                }
+
+                if (prev)
+                    prev->next = newPresent;
             }
 
             mtx.unlock();
@@ -64,55 +74,43 @@ class PresentChain {
 
             mtx.lock();
 
-            // cout << "remove" << endl;
+            cout << "remove" << endl;
             
-            if (!head)
-            {
-                cout << "nothing to remove" << endl;
-                
-                mtx.unlock();
-                return;
-            }
-
-            if (head->tag == tag)
-            {
-                Present* temp = head;
-                head = head->next;
-                delete temp;
-                
-                mtx.unlock();
-                return;
-            }
-
             Present* current = head;
+            Present* prev = nullptr;
 
-            while (current->next && current->next->tag != tag)
+            while (current)
             {
-                current = current->next;
-            }
+                if (current->tag >= tag && current->tag < tag + batchSize)
+                {
+                    if (prev)
+                        prev->next = current->next;
+                   
+                    else
+                        head = current->next;
+                    
+                    Present* temp = current;
+                    current = current->next;
+                    delete temp;
+                }
 
-            if (current->next)
-            {
-                Present* temp = current->next;
-                current->next = current->next->next;
-                delete temp;
-            }
-
-            else
-            {
-                // cout << "present with tag number " << tag << " not found" << endl;
+                else
+                {
+                    prev = current;
+                    current = current->next;
+                }
             }
 
             mtx.unlock();
         }
 
-        bool search(int tag, int batchSize)
+        bool search(int tag)
         {
             using namespace std;
             
             mtx.lock();
             
-            // cout << "search" << endl;
+            cout << "search" << endl;
 
             Present* current = head;
 
@@ -121,12 +119,14 @@ class PresentChain {
                 if (current->tag == tag)
                 {
                     mtx.unlock();
+                    cout << "tag found" << endl;
                     return true;
                 }
 
                 current = current->next;
             }
 
+            cout << "tag not found" << endl;
             mtx.unlock();
 
             return false;
@@ -137,29 +137,32 @@ void task(int num, PresentChain& chain, std::unordered_set<int>& tags)
 {
     using namespace std;
 
-    for (int i = 1; i <= NUM_PRESENTS; ++i)
+    for (int i = 0; i < NUM_PRESENTS; i += BATCH_SIZE)
     {
+        cout << i << endl;
+
         if (i % 3 == 0)
         {
             int tagToRemove = i % 1000;
 
             chain.remove(tagToRemove, BATCH_SIZE);
-            tags.erase(tagToRemove);
+
+            for (int j = 0; j < BATCH_SIZE; ++j)
+                tags.erase(tagToRemove + j);
         }
         else if (i % 3 == 1)
         {
             int tagToAdd = i % 1000;
             chain.add(tagToAdd, BATCH_SIZE);
-            tags.insert(tagToAdd);
+
+            for (int j = 0; j < BATCH_SIZE; ++j)
+                tags.insert(tagToAdd + j);
         }
         else
         {
             int tagToSearch = i % 1000;
 
-            if (chain.search(tagToSearch, BATCH_SIZE))
-                cout << "servant " << num << "found present with tag " << tagToSearch << endl;
-            else
-                cout << "servant " << num << "did not find present with tag " << tagToSearch << endl;
+            chain.search(tagToSearch);
         }
     }
 }
@@ -177,8 +180,8 @@ int main(void)
     
     for (auto& servant : servants)
         servant.join();
-
+    
     cout << "all presents have thank you notes written" << endl;
-
+    
     return 0;
 }
