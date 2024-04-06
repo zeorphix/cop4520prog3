@@ -125,6 +125,19 @@ void task(int num, PresentChain& chain)
 
     mt19937 gen(rd());
     uniform_int_distribution<> dis(1, NUM_PRESENTS);
+
+    for (int i = 0; i < NUM_PRESENTS / NUM_SERVANTS; ++i)
+    {
+        int task = dis(gen) % 3;
+        int present = dis(gen);
+
+        if (task == 0)
+            chain.add(present);
+        else if (task == 1)
+            chain.remove(present);
+        else
+            chain.search(present);
+    }
 }
 
 int main(void)
